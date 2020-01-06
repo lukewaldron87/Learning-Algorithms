@@ -63,6 +63,7 @@ public class PracticeApp {
 		for(int j=low; j<high; j++) {
 			
 			// check if the current element is less than the pivot point
+			// move values lees than the pivot to the left half of the array
 			if(inputArray[j] < pivot) {
 				// swap the element with the index of the lowest value
 				// and increment the low value index

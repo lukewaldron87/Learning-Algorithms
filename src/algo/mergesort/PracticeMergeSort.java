@@ -4,105 +4,78 @@ public class PracticeMergeSort {
 	
 	public void sort(int[] inputArray) {
 		
-		// pass inputArray  and it's start and end indexes 
-		// to recursive sort
-		sort(inputArray, 0, inputArray.length-1);
+		mergeSort(inputArray, 0, inputArray.length-1);
 		
 	}
 	
-	private void sort(int[] inputArray, int start, int end) {
+	private void mergeSort(int[] inputArray, int min, int max) {
 		
-		// return when at the end of the array
-		if(start >= end) {
-			return;
+		// only sort if not at the end of the array
+		if(min < max) {
+			
+			// split the array in two
+			int midpoint = (min+max)/2;
+			mergeSort(inputArray, min, midpoint);
+			mergeSort(inputArray, midpoint+1, max);
+			
+			// merge and sort arrays
+			merge(inputArray, min, midpoint, max);
+			
 		}
 		
-		// get the midpoint of the inputArray
-		int midpoint = (start + end) /2;
-		
-		//split the array into left and right arrays
-		sort(inputArray, start, midpoint);
-		sort(inputArray, midpoint+1, end);
-		
-		// sort and merge the left and right arrays
-		merge(inputArray, start, midpoint, end);
-		
 	}
 	
-	/**
-	 * create two arrays for the left and right elements
-	 * sort and merge these array into the input array
-	 * 
-	 * @param inputArray
-	 * @param start
-	 * @param mid
-	 * @param end
-	 */
-	private void merge(int[] inputArray, int start, int mid, int end) {
+	private void merge(int[] inputArray, int min, int mid, int max) {
 		
-		// get the length of the left and right arrays
-		int leftArrayLength = (mid-start)+1;
-		int rightArrayLength = end-mid;
+		// get the length of the two arrays 
+		int leftArrayLength = (mid-min)+1;
+		int rightArrayLength = max-mid;
 		
-		// create the left and right arrays
 		int[] leftArray = new int[leftArrayLength];
 		int[] rightArray = new int[rightArrayLength];
 		
-		// populate the left and right arrays
+		// fill the left and right arrays
 		for(int i=0; i<leftArrayLength; i++) {
-			leftArray[i] = inputArray[start+i];
+			leftArray[i] = inputArray[min+i];
 		}
 		
-		for(int i=0; i<rightArrayLength; i++) {
+		for(int i=0; i<rightArray.length; i++) {
 			rightArray[i] = inputArray[mid+i+1];
 		}
 		
-		// MERGE ARRAYS
-		// create array indexes
+
+		// merge arrays
 		int leftArrayIndex = 0;
 		int rightArrayIndex = 0;
-		int inputArrayIndex = start;
 		
-		// loop through the left and right arrays
-		// sort and merge them into the into array
-		while( leftArrayIndex<leftArrayLength && rightArrayIndex<rightArrayLength) {
+		int inputArrayIndex = min;
+		
+		while( leftArrayIndex < leftArrayLength && rightArrayIndex < rightArrayLength) {
 			
-			// if the current leftArray element
-			// is less than the current right array element
+			// place the element with the lowest value in the inputArray
 			if( leftArray[leftArrayIndex] < rightArray[rightArrayIndex]) {
-				
-				// add the current left array element to the input array
 				inputArray[inputArrayIndex] = leftArray[leftArrayIndex];
 				leftArrayIndex++;
-				
 			}else {
-				
-				//otherwise add the current rightArray element to the input array
 				inputArray[inputArrayIndex] = rightArray[rightArrayIndex];
 				rightArrayIndex++;
-				
 			}
 			
 			inputArrayIndex++;
+			
 		}
 		
-		// add any remaining elements
-		// from the right or left arrays 
-		// to the input array
-		while( leftArrayIndex<leftArrayLength ) {
-
+		// get the remaining elements form the left and right arrays
+		while( leftArrayIndex < leftArrayLength ) {
 			inputArray[inputArrayIndex] = leftArray[leftArrayIndex];
 			leftArrayIndex++;
 			inputArrayIndex++;
-			
 		}
 		
-		while( rightArrayIndex<rightArrayLength ) {
-			
+		while( rightArrayIndex < rightArrayLength ) {
 			inputArray[inputArrayIndex] = rightArray[rightArrayIndex];
 			rightArrayIndex++;
 			inputArrayIndex++;
-			
 		}
 		
 	}

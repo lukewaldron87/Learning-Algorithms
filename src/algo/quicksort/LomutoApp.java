@@ -44,6 +44,9 @@ public class LomutoApp {
 
 		// if the sub array
 		if(low<high) {
+			// partition the array with all values less than 
+			// the element at index high placed to the left of the partition
+			// and all elements greater placed to the right
 			int pivotIndex = partition(inputArray, low, high);
 			// sorts left half of the range
 			quickSort(inputArray, low, pivotIndex-1);
@@ -70,9 +73,10 @@ public class LomutoApp {
 		
 		// loop until you get to the pivot value
 		for(int j=low; j<high; j++) {
-		
 			
 			// if less than the pivot value
+			// move values lees than the pivot to the left half of the array
+			// increment the position of the low value index (i)
 			if(inputArray[j] < pivot) {
 				// swap the values at index i and j
 				temp = inputArray[j];
@@ -84,8 +88,9 @@ public class LomutoApp {
 			
 		}
 		
-		// swap j+1 (high) with i+1 to put end in the pivot point
-		//temp = inputArray[high];
+		// swap the pivot value at index high with the value at i
+		// this will place the pivot value after all lower values
+		// and before all higher values
 		inputArray[high] = inputArray[i];
 		inputArray[i] = pivot;
 		

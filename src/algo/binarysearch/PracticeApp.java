@@ -8,32 +8,47 @@ public class PracticeApp {
 
 		int[] inputArray = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 
-		System.out.println("index of search value: "+binarySearch(inputArray, 0, inputArray.length-1, 4));
+		System.out.println("index of search value shoud be 4 and is: "+binarySearch(inputArray, 0, inputArray.length-1, 4));
+		System.out.println("index of search value shoud be 12 and is: "+binarySearch(inputArray, 0, inputArray.length-1, 12));
+		System.out.println("index of search value shoud be 15 and is: "+binarySearch(inputArray, 0, inputArray.length-1, 15));
+		System.out.println("index of search value shoud be 5 and is: "+binarySearch(inputArray, 0, inputArray.length-1, 5));
+		System.out.println("index of search value shoud be 0 and is: "+binarySearch(inputArray, 0, inputArray.length-1, 0));
 		
 	}
 	
-	private static int binarySearch(int[] inputArray, int start, int end, int searchValue) {
+	/**
+	 * 
+	 * find an element in a sorted array
+	 * 
+	 * return the index of x
+	 * 
+	 * 
+	 * 
+	 * @param inputArray
+	 * @param min
+	 * @param max
+	 * @param x
+	 * @return
+	 */
+	private static int binarySearch(int[] inputArray, int min, int max, int x) {
 		
-		// get the midpoint
-		int midpoint = (start+end)/2;
-		int searchIndex;
+		// calculate the midpoint
+		int mid = (max+min)/2;
 		
-		// if midpoint is less than the searchValue
-		// partition the array to the right of the midpoint
-		// otherwise partition the array to the left
-		if(inputArray[midpoint] < searchValue) {
-			
-			return binarySearch(inputArray, midpoint+1, end, searchValue);
-			
-		}else if(inputArray[midpoint] > searchValue) {
-			
-			return binarySearch(inputArray, start, midpoint-1, searchValue);
-			
+		// check if the element at the midpoint is
+		// less then, greater than or equal to the midpoint element
+		// if not equal recursively call the method and set the min and max to the appropriate side of the midpoint
+		if(inputArray[mid] < x) {
+			// if less than check to the right of the midpoint
+			return binarySearch(inputArray, mid+1, max, x);
+		}else if(inputArray[mid] > x) {
+			// if greater than check to the left of the midpoint 
+			return binarySearch(inputArray, min, mid-1, x);
 		}else {
-			// if the midpoint is the same as the searchvalue return it
-			return midpoint;
+			// otherwise return the midpoint index
+			return mid;
 		}
-	
+		
 	}
 
 	/**
